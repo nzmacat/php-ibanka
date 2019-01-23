@@ -95,7 +95,7 @@ class Iban
             }, $bankaData);
         }
 
-        return array_merge([$bankaData, $subeData]);
+        return array_merge($bankaData, $subeData);
     }
 
     /**
