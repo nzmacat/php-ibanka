@@ -114,7 +114,7 @@ class Iban
      * @return \Filebase\Database
      * @throws \Filebase\Filesystem\FilesystemException
      */
-    prıvate static function _bankalar(): \Filebase\Database
+    private static function _bankalar(): \Filebase\Database
     {
         $bankalar = new \Filebase\Database([
             'dir' => join(DIRECTORY_SEPARATOR, [dirname(__FILE__), "depo", "bankalar"]),
