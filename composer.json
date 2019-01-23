@@ -1,0 +1,33 @@
+{
+  "name": "nzmacat/php-ibanka",
+  "license": "MIT",
+  "type": "library",
+  "description": "Iban dan banka ve şube öğrenmeye yarayan bi şey.",
+  "keywords": [
+    "iban",
+    "banka",
+    "şube"
+  ],
+  "authors": [
+    {
+      "name": "Nazmi Acat",
+      "email": "nzmacat@gmail.com",
+      "homepage": "https://google.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Ibanka\\": "src"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump":[
+      "Ibanka\\Otomatik::guncelle"
+    ]
+  },
+  "require": {
+    "php": "^7.1.3",
+    "jschaedl/iban-validation": "1.2.0",
+    "filebase/filebase": "^1.0"
+  }
+}

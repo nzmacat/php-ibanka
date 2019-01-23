@@ -1,0 +1,7 @@
+.idea
+/utils
+/vendor
+*.lock
+*.iml
+test
+depo
