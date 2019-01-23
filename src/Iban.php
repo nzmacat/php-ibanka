@@ -78,7 +78,7 @@ class Iban
             }, $bankaData);
         }
 
-        return array_merge($bankaData, $subeData);
+        return array_merge(["iban" => $iban->getNormalizedIban()], $bankaData, $subeData);
     }
 
     /**
