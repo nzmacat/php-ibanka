@@ -30,16 +30,7 @@ class Iban
 
         $banka = substr($bban, 1, 4);
 
-        $bankalar = new \Filebase\Database([
-            'dir' => join(DIRECTORY_SEPARATOR, [dirname(__FILE__), "depo", "bankalar"]),
-            'backupLocation' => join(DIRECTORY_SEPARATOR, [dirname(__FILE__), "depo", "yedek"]),
-            'format' => \Filebase\Format\Json::class,
-            'cache' => true,
-            'cache_expires' => 1800,
-            'pretty' => true,
-            'safe_filename' => true,
-            'read_only' => true
-        ]);
+        $bankalar = self::_bankalar();
 
         $subeIndex = [
             "0010" => 5,
@@ -82,6 +73,32 @@ class Iban
     }
 
     /**
+     * @param $banka
+     * @param $sube
+     * @param bool $buyuk_harf
+     * @throws \Filebase\Filesystem\FilesystemException
+     */
+    public static function ara($banka, $sube, $buyuk_harf = false)
+    {
+        $bankalar = self::_bankalar();
+
+        $bankaData = $bankalar->get($banka)->toArray();
+        $subeData = $bankalar->get($banka . $sube)->toArray();
+
+        if (!$buyuk_harf) {
+            $subeData = array_map(function ($string) {
+                return mb_convert_case($string, MB_CASE_TITLE, "UTF-8");
+            }, $subeData);
+
+            $bankaData = array_map(function ($string) {
+                return mb_convert_case($string, MB_CASE_TITLE, "UTF-8");
+            }, $bankaData);
+        }
+
+        return array_merge([$bankaData, $subeData]);
+    }
+
+    /**
      * @param $iban
      * @return bool
      */
@@ -91,5 +108,24 @@ class Iban
         $validator = new Validator();
 
         return $validator->validate($iban);
+    }
+
+    /**
+     * @return \Filebase\Database
+     * @throws \Filebase\Filesystem\FilesystemException
+     */
+    prıvate static function _bankalar(): \Filebase\Database
+    {
+        $bankalar = new \Filebase\Database([
+            'dir' => join(DIRECTORY_SEPARATOR, [dirname(__FILE__), "depo", "bankalar"]),
+            'backupLocation' => join(DIRECTORY_SEPARATOR, [dirname(__FILE__), "depo", "yedek"]),
+            'format' => \Filebase\Format\Json::class,
+            'cache' => true,
+            'cache_expires' => 1800,
+            'pretty' => true,
+            'safe_filename' => true,
+            'read_only' => true
+        ]);
+        return $bankalar;
     }
 }
