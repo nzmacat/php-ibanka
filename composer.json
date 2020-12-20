@@ -28,6 +28,6 @@
   "require": {
     "php": "^7.1.3",
     "jschaedl/iban-validation": "1.2.0",
-    "filebase/filebase": "^1.0"
+    "tmarois/filebase": "^1.0"
   }
 }
